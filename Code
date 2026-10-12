@@ -1,0 +1,17 @@
+import pandas as pd
+import numpy as np
+
+df = pd.read_csv("customer_interest_scores.csv")
+print(df)
+
+z = df["Interest_Score"]
+
+probability = 1 / (1 + np.exp(-z))
+
+print("Sigmoid Probabilities:")
+print(probability.round(2).to_string(index=False))
+
+df["Probability"] = probability.round(2)
+df["Prediction"] = np.where(probability >= 0.5, "Likely", "Unlikely")
+
+print(df)
